@@ -1,0 +1,127 @@
+﻿
+<div class="col-md-7 p-0 card-right">
+    <div class="card tab2-card">
+        <div class="card-body">
+            <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="top-profile-tab" data-toggle="tab" href="#top-profile" role="tab" aria-controls="top-profile" aria-selected="true"><span class="icon-user mr-2"></span>Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Register</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="top-tabContent">
+
+                @{
+                    if (!string.IsNullOrEmpty(ViewBag.RegisterError))
+                    {
+                        <p>ViewBag.RegisterError</p>
+                    }
+                }
+                <!-- Login -->
+                <div class="tab-pane fade show active" id="top-profile" role="tabpanel" aria-labelledby="top-profile-tab">
+                    <form class="form-horizontal auth-form">
+                        <div class="form-group">
+                            <input required="" name="login[email]" type="email" class="form-control" placeholder="Email" id="InputEmail">
+                        </div>
+                        <div class="form-group">
+                            <input required="" name="login[password]" type="password" class="form-control" placeholder="Password" id="InputPassword">
+                        </div>
+                        <div class="form-terms">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                                <a href="#" class="btn btn-default forgot-pass">lost your password</a>
+                            </div>
+                        </div>
+                        <div class="form-button">
+                            <button class="btn btn-primary" onclick="Login()" type="button">Login</button>
+                        </div>
+                        <div class="form-footer">
+                            <span>Or Login up with social platforms</span>
+                            <ul class="social">
+                                <li><a class="icon-facebook" href=""></a></li>
+                                <li><a class="icon-twitter" href=""></a></li>
+                                <li><a class="icon-instagram" href=""></a></li>
+                                <li><a class="icon-pinterest" href=""></a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Register-->
+                <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
+                    <form class="form-horizontal auth-form">
+                        <div class="form-group">
+                            <input required="" name="login[Email]" type="email" class="form-control" placeholder="Email" id="InputEmailRegister">
+                        </div>
+                        <div class="form-group">
+                            <input required="" name="login[password]" type="password" class="form-control" placeholder="Password" id="InputPasswordRegister">
+                        </div>
+                        <div class="form-group">
+                            <input required="" name="login[password]" type="password" class="form-control" placeholder="Confirm Password" id="InputConfirmPasswordRegister">
+                        </div>
+                        <div class="form-terms">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
+                                <label class="custom-control-label" for="customControlAutosizing1"><span>I agree all statements in <a href="" class="pull-right">Terms &amp; Conditions</a></span></label>
+                            </div>
+                        </div>
+                        <div class="form-button">
+                            <button class="btn btn-primary" onclick="RegisterPost()" type="button">Register</button>
+                        </div>
+                        <div class="form-footer">
+                            <span>Or Sign up with social platforms</span>
+                            <ul class="social">
+                                <li><a class="icon-facebook" href=""></a></li>
+                                <li><a class="icon-twitter" href=""></a></li>
+                                <li><a class="icon-instagram" href=""></a></li>
+                                <li><a class="icon-pinterest" href=""></a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Login() {
+        var login = {
+            userName: $("#InputEmail").val(),
+            password: $("#InputPassword").val()
+        }
+
+        $('#target').html('sending..');
+
+        $.ajax({
+            url: '/Login/SignIn',
+            type: 'Post',
+            data: { email: $("#InputEmail").val(), password: $("#InputPassword").val() },
+            success: function (data) {
+                $('#target').html(data.msg);
+            }
+        });
+    }</script>
+
+<script type="text/javascript">
+    function RegisterPost() {
+        var login = {
+            userName: $("#InputEmailRegister").val(),
+            password: $("#InputPasswordRegister").val()
+        }
+        console.log(login);
+
+        $('#target').html('sending..');
+
+        $.ajax({
+            url: '/Login/Register',
+            type: 'Post',
+            data: { email: $("#InputEmailRegister").val(), password: $("#InputPasswordRegister").val(), confirmPassword: $("#InputConfirmPasswordRegister").val() },
+            success: function (data) {
+                $('#target').html(data.msg);
+            }
+        });
+    }</script>
